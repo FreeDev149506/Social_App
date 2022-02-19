@@ -70,6 +70,11 @@ namespace API.Data.Migrations
                     b.Property<char>("Sex")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
