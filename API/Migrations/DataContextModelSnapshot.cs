@@ -167,8 +167,8 @@ namespace API.Migrations
                     b.Property<string>("GroupName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Username")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ConnectionId");
 
