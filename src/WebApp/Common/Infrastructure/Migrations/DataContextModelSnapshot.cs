@@ -50,10 +50,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("IdentityId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Interest")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
-
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("datetime2");
 
