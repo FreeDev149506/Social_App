@@ -69,7 +69,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("ApplicationUsers", (string)null);
+                    b.ToTable("ApplicationUsers");
                 });
 
             modelBuilder.Entity("Domain.Entities.City", b =>
@@ -89,7 +89,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Domain.Entities.Connection", b =>
@@ -107,7 +107,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("GroupName");
 
-                    b.ToTable("Connections", (string)null);
+                    b.ToTable("Connections");
                 });
 
             modelBuilder.Entity("Domain.Entities.Country", b =>
@@ -132,7 +132,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("Domain.Entities.Friend", b =>
@@ -150,7 +150,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("FriendId");
 
-                    b.ToTable("Friends", (string)null);
+                    b.ToTable("Friends");
                 });
 
             modelBuilder.Entity("Domain.Entities.FriendRequest", b =>
@@ -168,7 +168,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("RequestedId");
 
-                    b.ToTable("FriendRequests", (string)null);
+                    b.ToTable("FriendRequests");
                 });
 
             modelBuilder.Entity("Domain.Entities.Group", b =>
@@ -178,7 +178,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("Groups", (string)null);
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("Domain.Entities.Message", b =>
@@ -217,7 +217,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Domain.Entities.Picture", b =>
@@ -246,7 +246,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Pictures", (string)null);
+                    b.ToTable("Pictures");
                 });
 
             modelBuilder.Entity("Domain.Entities.Post", b =>
@@ -274,7 +274,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Domain.Entities.Region", b =>
@@ -294,7 +294,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Regions", (string)null);
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
