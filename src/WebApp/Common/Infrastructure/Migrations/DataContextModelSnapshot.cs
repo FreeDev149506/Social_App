@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -75,7 +75,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.City", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -113,7 +116,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Country", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -280,7 +286,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Region", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
@@ -308,11 +317,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.City", b =>
                 {
-                    b.HasOne("Domain.Entities.Region", null)
-                        .WithMany()
+                    b.HasOne("Domain.Entities.Region", "Region")
+                        .WithMany("Cities")
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("Domain.Entities.Connection", b =>
@@ -393,7 +404,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.HasOne("Domain.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany()
+                        .WithMany("Posts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -404,7 +415,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Region", b =>
                 {
                     b.HasOne("Domain.Entities.Country", null)
-                        .WithMany()
+                        .WithMany("Regions")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -423,11 +434,23 @@ namespace Infrastructure.Migrations
                     b.Navigation("MessagesSent");
 
                     b.Navigation("Pictures");
+
+                    b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Country", b =>
+                {
+                    b.Navigation("Regions");
                 });
 
             modelBuilder.Entity("Domain.Entities.Group", b =>
                 {
                     b.Navigation("Connections");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Region", b =>
+                {
+                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }
