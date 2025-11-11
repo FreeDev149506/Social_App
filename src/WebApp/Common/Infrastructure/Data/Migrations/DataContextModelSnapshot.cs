@@ -22,6 +22,159 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.ApplicationUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdentityId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("LastActive")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("ProfilePictureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("ApplicationUsers");
+                });
+
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.Post", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(20,0)");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateEdited")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DatePosted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.Region", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Regions");
+                });
+
             modelBuilder.Entity("Domain.DirectChatAggregate.DirectChat", b =>
                 {
                     b.Property<int>("Id")
@@ -75,110 +228,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Bio")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("IdentityId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("LastActive")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("ProfilePictureUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sex")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.ToTable("ApplicationUsers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Friend", b =>
+            modelBuilder.Entity("Domain.FriendAggregate.Friend", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -196,25 +246,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Friends");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FriendRequest", b =>
-                {
-                    b.Property<int>("RequesterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RequestedId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("RequesterId", "RequestedId");
-
-                    b.HasIndex("RequestedId");
-
-                    b.ToTable("FriendRequests");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Picture", b =>
+            modelBuilder.Entity("Domain.FriendRequestAggregate.FriendRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -222,8 +254,34 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AppUserId")
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RequestedId")
                         .HasColumnType("int");
+
+                    b.Property<int>("RequesterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestedId");
+
+                    b.HasIndex("RequesterId");
+
+                    b.ToTable("FriendRequests");
+                });
+
+            modelBuilder.Entity("Domain.MediaAggregate.Picture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -238,71 +296,58 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.ToTable("Pictures");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Post", b =>
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.ApplicationUser", b =>
                 {
-                    b.Property<decimal>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(20,0)");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DateEdited")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DatePosted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Posts");
+                    b.HasOne("Domain.ApplicationUserAggregate.City", null)
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entities.Region", b =>
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.City", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Domain.ApplicationUserAggregate.Region", "Region")
+                        .WithMany("Cities")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Navigation("Region");
+                });
 
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.Post", b =>
+                {
+                    b.HasOne("Domain.ApplicationUserAggregate.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Navigation("ApplicationUser");
+                });
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Regions");
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.Region", b =>
+                {
+                    b.HasOne("Domain.ApplicationUserAggregate.Country", null)
+                        .WithMany("Regions")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.DirectChatAggregate.DirectChat", b =>
                 {
-                    b.HasOne("Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Domain.ApplicationUserAggregate.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("User1Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Domain.ApplicationUserAggregate.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("User2Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -317,128 +362,56 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Domain.ApplicationUserAggregate.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Domain.FriendAggregate.Friend", b =>
                 {
-                    b.HasOne("Domain.Entities.City", null)
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.City", b =>
-                {
-                    b.HasOne("Domain.Entities.Region", "Region")
-                        .WithMany("Cities")
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Region");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Friend", b =>
-                {
-                    b.HasOne("Domain.Entities.ApplicationUser", "FriendUser")
+                    b.HasOne("Domain.ApplicationUserAggregate.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("FriendId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.ApplicationUser", "User")
-                        .WithMany("Friends")
+                    b.HasOne("Domain.ApplicationUserAggregate.ApplicationUser", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.Navigation("FriendUser");
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FriendRequest", b =>
+            modelBuilder.Entity("Domain.FriendRequestAggregate.FriendRequest", b =>
                 {
-                    b.HasOne("Domain.Entities.ApplicationUser", "Requested")
-                        .WithMany("FriendRequestsReceived")
+                    b.HasOne("Domain.ApplicationUserAggregate.ApplicationUser", null)
+                        .WithMany()
                         .HasForeignKey("RequestedId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.ApplicationUser", "Requester")
-                        .WithMany("FriendRequestsSent")
+                    b.HasOne("Domain.ApplicationUserAggregate.ApplicationUser", null)
+                        .WithMany()
                         .HasForeignKey("RequesterId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.Navigation("Requested");
-
-                    b.Navigation("Requester");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Picture", b =>
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.Country", b =>
                 {
-                    b.HasOne("Domain.Entities.ApplicationUser", "AppUser")
-                        .WithMany("Pictures")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
+                    b.Navigation("Regions");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Post", b =>
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.Region", b =>
                 {
-                    b.HasOne("Domain.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany("Posts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Region", b =>
-                {
-                    b.HasOne("Domain.Entities.Country", null)
-                        .WithMany("Regions")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("Domain.DirectChatAggregate.DirectChat", b =>
                 {
                     b.Navigation("Messages");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
-                {
-                    b.Navigation("FriendRequestsReceived");
-
-                    b.Navigation("FriendRequestsSent");
-
-                    b.Navigation("Friends");
-
-                    b.Navigation("Pictures");
-
-                    b.Navigation("Posts");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Country", b =>
-                {
-                    b.Navigation("Regions");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Region", b =>
-                {
-                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }
