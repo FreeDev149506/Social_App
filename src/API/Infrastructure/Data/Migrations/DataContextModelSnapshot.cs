@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.0")
+                .HasAnnotation("ProductVersion", "10.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -77,57 +77,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("ApplicationUsers");
                 });
 
-            modelBuilder.Entity("Domain.ApplicationUserAggregate.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("Domain.ApplicationUserAggregate.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries");
-                });
-
             modelBuilder.Entity("Domain.ApplicationUserAggregate.Post", b =>
                 {
                     b.Property<decimal>("Id")
@@ -156,7 +105,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Domain.ApplicationUserAggregate.Region", b =>
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.UserPicture", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,19 +113,20 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CountryId")
+                    b.Property<int>("PictureId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("PictureId")
+                        .IsUnique();
 
-                    b.ToTable("Regions");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserPictures");
                 });
 
             modelBuilder.Entity("Domain.DirectChatAggregate.DirectChat", b =>
@@ -303,9 +253,83 @@ namespace Infrastructure.Migrations
                     b.ToTable("Pictures");
                 });
 
+            modelBuilder.Entity("Domain.ReferenceData.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("Domain.ReferenceData.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("Domain.ReferenceData.Region", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Regions");
+                });
+
             modelBuilder.Entity("Domain.ApplicationUserAggregate.ApplicationUser", b =>
                 {
-                    b.HasOne("Domain.ApplicationUserAggregate.City", null)
+                    b.HasOne("Domain.ReferenceData.City", null)
                         .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -314,17 +338,6 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.MediaAggregate.Picture", null)
                         .WithOne()
                         .HasForeignKey("Domain.ApplicationUserAggregate.ApplicationUser", "ProfilePictureId");
-                });
-
-            modelBuilder.Entity("Domain.ApplicationUserAggregate.City", b =>
-                {
-                    b.HasOne("Domain.ApplicationUserAggregate.Region", "Region")
-                        .WithMany("Cities")
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("Domain.ApplicationUserAggregate.Post", b =>
@@ -338,11 +351,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("Domain.ApplicationUserAggregate.Region", b =>
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.UserPicture", b =>
                 {
-                    b.HasOne("Domain.ApplicationUserAggregate.Country", null)
-                        .WithMany("Regions")
-                        .HasForeignKey("CountryId")
+                    b.HasOne("Domain.MediaAggregate.Picture", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.ApplicationUserAggregate.UserPicture", "PictureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.ApplicationUserAggregate.ApplicationUser", null)
+                        .WithMany("Pictures")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -407,19 +426,44 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.ApplicationUserAggregate.Country", b =>
+            modelBuilder.Entity("Domain.ReferenceData.City", b =>
                 {
-                    b.Navigation("Regions");
+                    b.HasOne("Domain.ReferenceData.Region", "Region")
+                        .WithMany("Cities")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Region");
                 });
 
-            modelBuilder.Entity("Domain.ApplicationUserAggregate.Region", b =>
+            modelBuilder.Entity("Domain.ReferenceData.Region", b =>
                 {
-                    b.Navigation("Cities");
+                    b.HasOne("Domain.ReferenceData.Country", null)
+                        .WithMany("Regions")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.ApplicationUserAggregate.ApplicationUser", b =>
+                {
+                    b.Navigation("Pictures");
                 });
 
             modelBuilder.Entity("Domain.DirectChatAggregate.DirectChat", b =>
                 {
                     b.Navigation("Messages");
+                });
+
+            modelBuilder.Entity("Domain.ReferenceData.Country", b =>
+                {
+                    b.Navigation("Regions");
+                });
+
+            modelBuilder.Entity("Domain.ReferenceData.Region", b =>
+                {
+                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }
