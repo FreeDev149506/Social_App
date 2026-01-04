@@ -568,7 +568,8 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.MediaAggregate.Picture", null)
                         .WithOne()
-                        .HasForeignKey("Domain.ApplicationUserAggregate.ApplicationUser", "ProfilePictureId");
+                        .HasForeignKey("Domain.ApplicationUserAggregate.ApplicationUser", "ProfilePictureId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("Domain.ApplicationUserAggregate.Post", b =>
